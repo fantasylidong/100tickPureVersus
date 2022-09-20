@@ -5,11 +5,6 @@
 		"type"		"S"
 		"text"		"{LIGHTGREEN}[本章节地图]: {GREEN}{CURRENTMAP} \n{LIGHTGREEN}[服务器时间]: {GREEN}{TIME24} - {DATE}"
 	}
-	"2"
-	{
-		"type"		"S"
-		"text"		"{LIGHTGREEN}当前模式:{GREEN}绝境求生24特{LIGHTGREEN}，刷新模式:{GREEN}引擎刷特"
-	}
 	"3"
 	{
 		"type"		"S"
@@ -29,10 +24,5 @@
 	{
 		"type"		"S"
 		"text"		"{LIGHTGREEN}输入!ch !tagslist选择自己已获得的称号佩戴，如果称号未正确加载输入!cz重新载入称号"
-	}
-	"7"
-	{
-		"type"		"S"
-		"text"		"{LIGHTGREEN}本服务器有和Anne服务器类似的商店系统"
 	}
 }
