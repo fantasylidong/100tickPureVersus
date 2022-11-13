@@ -8,22 +8,22 @@
 	"3"
 	{
 		"type"		"S"
-		"text"		"{LIGHTGREEN}可以输入!slots来调整服务器位置，新的位置只能用来观战，最大生还者上限4人"
+		"text"		"{LIGHTGREEN}可以输入{GREEN}!slots{LIGHTGREEN}来调整服务器位置，新的位置只能用来观战，最大生还者加特感上限8人"
 	}
 	"4"
 	{
 		"type"		"S"
-		"text"		"{LIGHTGREEN}本服摆烂OP 东，欢迎加入组服务器qq群：484690502 寻找小伙伴一起开黑"
+		"text"		"{LIGHTGREEN}本服摆烂OP {GREEN}东{LIGHTGREEN}，欢迎加入组服务器qq群：484690502 寻找小伙伴一起开黑"
 	}
 	"5"
 	{
 		"type"		"S"
-		"text"		"{LIGHTGREEN}输入!dance跳跳舞解解压"
+		"text"		"{LIGHTGREEN}输入{GREEN}!dance{LIGHTGREEN}跳跳舞解解压"
 	}
 	"6"
 	{
 		"type"		"S"
-		"text"		"{LIGHTGREEN}输入!ch !tagslist选择自己已获得的称号佩戴，如果称号未正确加载输入!cz重新载入称号"
+		"text"		"{LIGHTGREEN}输入{GREEN}!ch !tagslist{LIGHTGREEN}选择自己已获得的称号佩戴，如果称号未正确加载输入!cz重新载入称号"
 	}
 	"7"
 	{
