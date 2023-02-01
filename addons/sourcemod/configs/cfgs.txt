@@ -1,5 +1,16 @@
 "Cfgs"
 {
+	"服务器选项"
+	{
+		"sm_restartmap"
+		{
+			"message" "重置当前地图"
+		}
+		"sm_restart"
+		{
+			"message" "服务器端重启"
+		}
+	}
 	"开关Mod"
 	{
 		"exec vote/mod_on.cfg"
@@ -11,4 +22,42 @@
 			"message" "关闭Mod"
 		}
 	}	
+	"药役模式选择"
+	{
+		"sm_fm annehappy"
+		{
+			"message" "普通药役模式"
+		}
+		"sm_fm hunters"
+		{
+			"message" "1vHunter模式"
+		}
+		"sm_fm alone"
+		{
+			"message" "单人装B模式"
+		}
+		"sm_fm witchparty"
+		{
+			"message" "WitchParty模式"
+		}
+		"sm_fm allcharger"
+		{
+			"message" "牛牛冲刺大逃亡"
+		}
+	}
+	"杂项"
+	{
+		"sm_cvar l4d2_scripted_hud_enable 1"
+		{
+			"message" "打开hud"
+		}
+		"sm_cvar l4d2_scripted_hud_enable 0"
+		{
+			"message" "关闭hud"
+		}
+		"sm_cvar specrates_fulltickspecnum 1"
+		{
+			"message" "限制旁观tick"
+		}
+	}
 }
