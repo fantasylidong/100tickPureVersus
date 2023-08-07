@@ -1,29 +1,29 @@
 /**
  * =============================================================================
  * Left 4 Dead Stocks Library (C)2011-2012 Buster "Mr. Zero" Nielsen
- * Syntax Update and merge into "Left 4 DHooks Direct" (C) 2021 "SilverShot"
+ * Syntax Update and merge into "Left 4 DHooks Direct" (C) 2023 "SilverShot"
  * =============================================================================
  *
- * This program is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU General Public License, version 3.0, as 
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License, version 3.0, as
  * published by the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
  * more details.
  *
- * You should have received a copy of the GNU General Public License along 
+ * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * As a special exception, AlliedModders LLC gives you permission to link the
  * code of this program (as well as its derivative works) to "Half-Life 2,"
- * the "Source Engine," the "SourcePawn JIT," and any Game MODs that run on 
+ * the "Source Engine," the "SourcePawn JIT," and any Game MODs that run on
  * software by the Valve Corporation.  You must obey the GNU General Public
- * License in all respects for all other code used.  Additionally, 
- * AlliedModders LLC grants this exception to all derivative works.  
- * AlliedModders LLC defines further exceptions, found in LICENSE.txt 
- * (as of this writing, version JULY-31-2007), or 
+ * License in all respects for all other code used.  Additionally,
+ * AlliedModders LLC grants this exception to all derivative works.
+ * AlliedModders LLC defines further exceptions, found in LICENSE.txt
+ * (as of this writing, version JULY-31-2007), or
  * <http://www.sourcemod.net/license.php>.
  */
 
@@ -134,13 +134,17 @@ enum L4D2ZombieClassType
 
 enum L4D2UseAction
 {
-	L4D2UseAction_None				= 0, // No use action active
-	L4D2UseAction_Healing			= 1, // Includes healing yourself or a teammate.
-	L4D2UseAction_Defibing			= 4, // When defib'ing a dead body.
-	L4D2UseAction_GettingDefibed	= 5, // When comming back to life from a dead body.
-	L4D2UseAction_PouringGas		= 8, // Pouring gas into a generator
-	L4D2UseAction_Cola				= 9, // For Dead Center map 2 cola event, when handing over the cola to whitalker.
-	L4D2UseAction_Button			= 10 // Such as buttons, timed buttons, generators, etc.
+	L4D2UseAction_None				= 0,	// No use action active
+	L4D2UseAction_Healing			= 1,	// Includes healing yourself or a teammate.
+	L4D2UseAction_AmmoPack			= 2,	// When deploying the ammo pack that was never added into the game
+	L4D2UseAction_Defibing			= 4,	// When defib'ing a dead body.
+	L4D2UseAction_GettingDefibed	= 5,	// When comming back to life from a dead body.
+	L4D2UseAction_DeployIncendiary	= 6,	// When deploying Incendiary ammo
+	L4D2UseAction_DeployExplosive	= 7,	// When deploying Explosive ammo
+	L4D2UseAction_PouringGas		= 8,	// Pouring gas into a generator
+	L4D2UseAction_Cola				= 9,	// For Dead Center map 2 cola event, when handing over the cola to whitalker.
+	L4D2UseAction_Button			= 10,	// Such as buttons, timed buttons, generators, etc.
+	L4D2UseAction_UsePointScript	= 11	// When using a "point_script_use_target" entity
 	/* List is not fully done, these are just the ones I have found so far */
 }
 
@@ -155,6 +159,29 @@ enum L4DResourceType
 	L4DResource_TankTickets2
 }
 
+stock const char L4D1ZombieClassname[6][] =
+{
+	"smoker",
+	"boomer",
+	"hunter",
+	"witch",
+	"tank",
+	"error_bad_L4D1ZombieClassType"
+};
+
+stock const char L4D2ZombieClassname[9][] =
+{
+	"smoker",
+	"boomer",
+	"hunter",
+	"spitter",
+	"jockey",
+	"charger",
+	"witch",
+	"tank",
+	"error_bad_L4D2ZombieClassType"
+};
+
 static const char L4DResourceName[L4DResourceType][] =
 {
 	"m_iPing",
@@ -165,6 +192,19 @@ static const char L4DResourceName[L4DResourceType][] =
 	"m_wantsToPlay",
 	"m_tankTickets"
 };
+
+/**
+ * Returns the clients team using L4DTeam.
+ *
+ * @param client		Player's index.
+ * @return				Current L4DTeam of player.
+ * @error				Invalid client index.
+ */
+stock L4DTeam L4D_GetClientTeam(int client)
+{
+	int team = GetClientTeam(client);
+	return view_as<L4DTeam>(team);
+}
 
 /**
  * Returns zombie player L4D1 zombie class.
@@ -201,7 +241,7 @@ stock void L4D1_SetPlayerZombieClass(int client, L4D1ZombieClassType class)
  * @error				Invalid client index.
  */
 // L4D2 only.
-stock L4D2ZombieClassType L4D2_GetPlayerZombieClass(int client)
+stock any L4D2_GetPlayerZombieClass(int client)
 {
 	return view_as<L4D2ZombieClassType>(GetEntProp(client, Prop_Send, "m_zombieClass"));
 }
@@ -393,7 +433,7 @@ stock int L4D_GetBotOfIdlePlayer(int client)
 {
 	int idleClient;
 	int offset;
-	char netclass[128];
+	char netclass[64];
 
 	for (int bot = 1; bot <= MaxClients; bot++)
 	{
@@ -434,7 +474,7 @@ stock int L4D_GetBotOfIdlePlayer(int client)
  */
 stock int L4D_GetIdlePlayerOfBot(int bot)
 {
-	char netclass[128];
+	char netclass[64];
 	GetEntityNetClass(bot, netclass, sizeof(netclass));
 	int offset = FindSendPropInfo(netclass, "m_humanSpectatorUserID");
 
@@ -632,7 +672,7 @@ stock bool L4D2_SetEntityGlow(int entity, L4D2GlowType type, int range, int minR
 		return false;
 	}
 
-	char netclass[128];
+	char netclass[64];
 	GetEntityNetClass(entity, netclass, sizeof(netclass));
 
 	int offset = FindSendPropInfo(netclass, "m_iGlowType");
@@ -1025,9 +1065,10 @@ stock void L4D_SetPlayerIsGoingToDie(int client, bool isGoingToDie)
  */
 stock bool L4D2_IsWeaponUpgradeCompatible(int weapon)
 {
-	char netclass[128];
-	GetEntityNetClass(weapon, netclass, sizeof(netclass));
-	return FindSendPropInfo(netclass, "m_upgradeBitVec") > 0;
+	if( HasEntProp(weapon, Prop_Send, "m_upgradeBitVec") )
+		return true;
+
+	return false;
 }
 
 /**
@@ -1040,7 +1081,10 @@ stock bool L4D2_IsWeaponUpgradeCompatible(int weapon)
 // L4D2 only.
 stock int L4D2_GetWeaponUpgradeAmmoCount(int weapon)
 {
-	return HasEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded") && GetEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded");
+	if( HasEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded") )
+		return GetEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded");
+
+	return 0;
 }
 
 /**
@@ -1055,9 +1099,7 @@ stock int L4D2_GetWeaponUpgradeAmmoCount(int weapon)
 stock void L4D2_SetWeaponUpgradeAmmoCount(int weapon, int count)
 {
 	if( HasEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded") )
-	{
 		SetEntProp(weapon, Prop_Send, "m_nUpgradedPrimaryAmmoLoaded", count);
-	}
 }
 
 /**
@@ -1070,7 +1112,10 @@ stock void L4D2_SetWeaponUpgradeAmmoCount(int weapon, int count)
 // L4D2 only.
 stock int L4D2_GetWeaponUpgrades(int weapon)
 {
-	return HasEntProp(weapon, Prop_Send, "m_upgradeBitVec") && GetEntProp(weapon, Prop_Send, "m_upgradeBitVec");
+	if( HasEntProp(weapon, Prop_Send, "m_upgradeBitVec") )
+		return GetEntProp(weapon, Prop_Send, "m_upgradeBitVec");
+
+	return 0;
 }
 
 /**
@@ -1274,6 +1319,30 @@ stock void L4D_SetPlayerTempHealth(int client, int tempHealth)
 {
 	SetEntPropFloat(client, Prop_Send, "m_healthBuffer", float(tempHealth));
 	SetEntPropFloat(client, Prop_Send, "m_healthBufferTime", GetGameTime());
+}
+
+/**
+ * Set players temporarily health. Allows for setting above 200 HP.
+ *
+ * @param client		Client index.
+ * @param tempHealth	Temporarily health.
+ * @noreturn
+ * @error				Invalid client index.
+ */
+stock void L4D_SetPlayerTempHealthFloat(int client, float tempHealth)
+{
+	static ConVar painPillsDecayCvar;
+	if (painPillsDecayCvar == null)
+	{
+		painPillsDecayCvar = FindConVar("pain_pills_decay_rate");
+		if (painPillsDecayCvar == null)
+		{
+			return;
+		}
+	}
+
+	SetEntPropFloat(client, Prop_Send, "m_healthBuffer", tempHealth);
+	SetEntPropFloat(client, Prop_Send, "m_healthBufferTime", GetGameTime() + ((tempHealth - 200) / painPillsDecayCvar.FloatValue + 1 / painPillsDecayCvar.FloatValue));
 }
 
 /**

@@ -10,5 +10,16 @@
 		{
 			"message" "关闭Mod"
 		}
+	}
+	"开关安全门锁定系统"
+	{
+		"sm_cvar l4d2_doorlock_plugin_enable 1"
+		{
+			"message" "开启安全门锁定系统"
+		}
+		"sm_cvar l4d2_doorlock_plugin_enable 1"
+		{
+			"message" "关闭安全门锁定系统"
+		}
 	}	
 }
