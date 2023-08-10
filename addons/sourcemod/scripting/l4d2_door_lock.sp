@@ -145,8 +145,8 @@ public void OnPluginStart()
 	Cvar_DoorLock_GameModes = CreateConVar("l4d2_doorlock_game_mode", "versus,mutation12", "Turn On Door Lock In These Game Modes, Separate By Commas (No Spaces, Empty = All).", FCVAR_NOTIFY);
 	Cvar_DoorLock_ModesType = CreateConVar("l4d2_doorlock_first_scenario_mode", "0", "Set First Chapters Mode (0 = Freeze Survivors, 1 = Teleport Survivors)", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_AddCheats = CreateConVar("l4d2_doorlock_add_cheats", "3", "Set Cheats While Safe Area Locked (0 = No Cheats, 1 = No DMG, 2 = Infine Ammo, 3 = Both)", FCVAR_NOTIFY, true, 0.0, true, 3.0);
-	Cvar_DoorLock_Countdown = CreateConVar("l4d2_doorlock_countdown", "5", "How Long You Want To Set The Countdown To Unlock The Safe Area (In Seconds)", FCVAR_NOTIFY);
-	Cvar_DoorLock_LoaderMax = CreateConVar("l4d2_doorlock_loaders_time", "60", "How Long Plugin Waits For Loaders Before Giving Up On Them (In Seconds)", FCVAR_NOTIFY);
+	Cvar_DoorLock_Countdown = CreateConVar("l4d2_doorlock_countdown", "40", "How Long You Want To Set The Countdown To Unlock The Safe Area (In Seconds)", FCVAR_NOTIFY);
+	Cvar_DoorLock_LoaderMax = CreateConVar("l4d2_doorlock_loaders_time", "40", "How Long Plugin Waits For Loaders Before Giving Up On Them (In Seconds)", FCVAR_NOTIFY);
 	Cvar_DoorLock_AllowGlow = CreateConVar("l4d2_doorlock_glow_enable", "1", "Set A Glow For The Saferoom Doors", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_GlowRange = CreateConVar("l4d2_doorlock_glow_range", "500", "Set The Glow Range For Saferoom Doors", FCVAR_NOTIFY);
 	Cvar_DoorLock_LockColor = CreateConVar("l4d2_doorlock_lock_glow_color",	"255 0 0", "Set Saferoom Lock Glow Color, (0-255) Separated By Spaces.", FCVAR_NOTIFY);
