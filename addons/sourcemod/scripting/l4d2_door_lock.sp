@@ -149,15 +149,15 @@ public void OnPluginStart()
 	Cvar_DoorLock_LoaderMax = CreateConVar("l4d2_doorlock_loaders_time", "40", "How Long Plugin Waits For Loaders Before Giving Up On Them (In Seconds)", FCVAR_NOTIFY);
 	Cvar_DoorLock_AllowGlow = CreateConVar("l4d2_doorlock_glow_enable", "0", "Set A Glow For The Saferoom Doors", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_GlowRange = CreateConVar("l4d2_doorlock_glow_range", "500", "Set The Glow Range For Saferoom Doors", FCVAR_NOTIFY);
-	Cvar_DoorLock_LockColor = CreateConVar("l4d2_doorlock_lock_glow_color",	"255 0 0", "Set Saferoom Lock Glow Color, (0-255) Separated By Spaces.", FCVAR_NOTIFY);
-	Cvar_DoorLock_OpenColor = CreateConVar("l4d2_doorlock_unlock_glow_color", "0 255 0", "Set Saferoom Unlock Glow Color, (0-255) Separated By Spaces.", FCVAR_NOTIFY);
+	Cvar_DoorLock_LockColor = CreateConVar("l4d2_doorlock_lock_glow_color",	"0 0 0", "Set Saferoom Lock Glow Color, (0-255) Separated By Spaces.", FCVAR_NOTIFY);
+	Cvar_DoorLock_OpenColor = CreateConVar("l4d2_doorlock_unlock_glow_color", "0 0 0", "Set Saferoom Unlock Glow Color, (0-255) Separated By Spaces.", FCVAR_NOTIFY);
 	Cvar_DoorLock_EnableRdy = CreateConVar("l4d2_doorlock_enable_ready_mode", "0", "Enable ReadyUp Mode (0 = Disable, 1 = Enable).", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_UnrdyTime = CreateConVar("l4d2_doorlock_unready_counts", "3", "Set How Many Times Players Are Allowed To Use Unready Per Round.", FCVAR_NOTIFY);
 	Cvar_DoorLock_RdyTimeUp = CreateConVar("l4d2_doorlock_readyup_time", "45", "How Long Plugin Waits For Unready Teams Before Giving Up On Them (In Seconds)", FCVAR_NOTIFY);
 	Cvar_DoorLock_RdyPercnt = CreateConVar("l4d2_doorlock_readyup_percent", "75.0", "Set The Minimum Percentage Required For A Ready Team To Start The Round", FCVAR_NOTIFY);
 	Cvar_DoorLock_Announces = CreateConVar("l4d2_doorlock_readyup_notify", "1", "Display Chat Texts When A Team Is Ready (0 = Disable, 1 = Enable)", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_LeaverMsg = CreateConVar("l4d2_doorlock_leavers_notify", "0", "Display Chat Texts To Leavers When Teleported (0 = Disable, 1 = Chat, 2 = Central Text)", FCVAR_NOTIFY, true, 0.0, true, 2.0);
-	Cvar_DoorLock_LoaderMsg = CreateConVar("l4d2_doorlock_loaders_message", "0", "Display Hint Texts To Connected Players Notiying Them That Loaders Are Connecting (0 = Disable, 1 = Enable)", FCVAR_NOTIFY, true, 0.0, true, 1.0);
+	Cvar_DoorLock_LoaderMsg = CreateConVar("l4d2_doorlock_loaders_message", "1", "Display Hint Texts To Connected Players Notiying Them That Loaders Are Connecting (0 = Disable, 1 = Enable)", FCVAR_NOTIFY, true, 0.0, true, 1.0);
 	Cvar_DoorLock_ExtraBots = CreateConVar("l4d2_doorlock_loaders_extraplayers", "0", "If You Playing With Extra Bots, Specifiy Maxium Teams Count (Survivors + Infected), Otherwise Leave It '0'", FCVAR_NOTIFY, true, 0.0, true, 64.0);
 	//AutoExecConfig(true, "l4d2_door_lock");
 	
@@ -347,7 +347,7 @@ Action Timer_PendingLoaders(Handle timer)
 		return Plugin_Stop;
 	}
 	
-	if(Cvar_DoorLock_LoaderMsg.BoolValue) PrintHintTextToAll("%t", "Loaders Connecting");
+	if(Cvar_DoorLock_LoaderMsg.BoolValue) PrintHintTextToAll("%t", "还有玩家正在连接中，请稍等");
 	return Plugin_Continue;
 }
 
